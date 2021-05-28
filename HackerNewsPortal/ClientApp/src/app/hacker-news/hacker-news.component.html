@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+
+<body>
+  <div>
+    <input type="text" id="searchTerm" name="searchTerm" required minlength="4" [value]="searchTerm" (input)="searchTerm=$event.target.value">
+    <button (click)="searchArticles()" class="btn-primary">Search Articles</button>
+    <button (click)="resetSearch()" >Reset</button>
+  </div>
+  <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="pages">
+    <thead>
+      <tr>
+        <th>
+          Article
+        </th>
+        <th>
+          Author
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let article of pages.stories  | paginate: { itemsPerPage: 10, currentPage: page, totalItems: pages.totalStories }">
+        <td><a href="{{article.url}}" target=”_blank”> {{article.title}}</a></td>
+        <td>{{article.by}}</td>
+      </tr>
+    </tbody>
+    <pagination-controls (pageChange)="getPage($event)"></pagination-controls>
+  </table>
+
+</body>
+</html>
