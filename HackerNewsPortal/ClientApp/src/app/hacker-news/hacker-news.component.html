@@ -9,7 +9,7 @@
   <div>
     <input type="text" id="searchTerm" name="searchTerm" required minlength="4" [value]="searchTerm" (input)="searchTerm=$event.target.value">
     <button (click)="searchArticles()" class="btn-primary">Search Articles</button>
-    <button (click)="resetSearch()" >Reset</button>
+    <button id="reset" (click)="resetSearch()" >Reset</button>
   </div>
   <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="pages">
     <thead>
@@ -30,6 +30,19 @@
     </tbody>
     <pagination-controls (pageChange)="getPage($event)"></pagination-controls>
   </table>
-
+  <table id="noData" class='table table-striped' aria-labelledby="tableLabel" *ngIf="!pages">
+    <thead>
+      <th>
+        No Data To Load
+      </th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          Unfortunately there are no articles available at the moment.
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </body>
 </html>

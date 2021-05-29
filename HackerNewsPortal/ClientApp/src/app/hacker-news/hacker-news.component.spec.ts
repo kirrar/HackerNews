@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { NgxPaginationModule } from 'ngx-pagination';
+import { HttpClientModule } from '@angular/common/http';
 import { HackerNewsComponent } from './hacker-news.component';
 
 describe('HackerNewsComponent', () => {
@@ -7,25 +8,38 @@ describe('HackerNewsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [HackerNewsComponent]
+      declarations: [ HackerNewsComponent ],
+      imports: [ NgxPaginationModule, HttpClientModule ],
+      providers: [ { provide: 'BASE_URL', useValue: 'http://localhost:5000/' } ]
     })
-      .compileComponents();
+    .compileComponents();
   }));
-
+  
   beforeEach(() => {
     fixture = TestBed.createComponent(HackerNewsComponent);
     fixture.detectChanges();
   });
 
-  it('go to page 2 if there are paination buttons', async(() => {
-    var = element(by.cssContainingText('span.ngx-pagination', '100'))
-
-    const countElement = fixture.nativeElement.querySelector('strong');
-    expect(countElement.textContent).toEqual('0');
-
-    const incrementButton = fixture.nativeElement.querySelector('button');
-    incrementButton.click();
-    fixture.detectChanges();
-    expect(countElement.textContent).toEqual('1');
+  it('should have a input box', async(() => {
+    const inputBox = fixture.nativeElement.querySelector('#searchTerm');
+    expect(inputBox).toBeDefined();
   }));
+
+  it('should have a search button', async() =>{
+    const button = fixture.nativeElement.querySelector('.btn-primary');
+    expect(button).toBeDefined();
+  });
+
+  it('should have a reset button', async() =>{
+    const button = fixture.nativeElement.querySelector('#searchTerm');
+    expect(button).toBeDefined();
+  });
+
+  it('should show empty table message if not articles', async() =>{
+    const component = fixture.componentInstance;
+    expect(component.pages).toBeUndefined();
+
+    const table = fixture.nativeElement.querySelector('#noData');
+    expect(table).toBeDefined();
+  });
 });
